@@ -286,14 +286,12 @@
 </template>
 <script>
 import { postRequest, getRequest } from "@/utils/api";
-import knn from "@/components/algos/knn.vue";
 import oldData from "@/components/outcomeShow/oldData.vue";
 import newData from "@/components/outcomeShow/newData.vue";
-import storage from "@/utils/storage";
+
 
 export default {
   components: {
-    knn,
     oldData,
     newData,
   },

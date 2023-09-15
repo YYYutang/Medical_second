@@ -2,17 +2,18 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import SideBar from '@/components/sideBar/index.vue'
 import dash from '@/views/dash/index.vue'
-import represent from "@/views/represent.vue";
-import visualization from "@/views/visualization.vue";
-import dataManage from "@/views/dataManage.vue";
+import dataManage from "@/views/dataManage/dataManage.vue";
 
-
+import interactionDivide from '@/views/InteractionDivide/index.vue'
+import multicluster from '@/views/multicluster/index.vue'
+import peopleDivide from "@/views/peopleDivide/index.vue"
+import introduce from "@/views/introduce/intoduce.vue"
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    redirect: '/dash',
+    redirect: '/introduce',
     name: 'first',
     component: SideBar,
     children: [{
@@ -20,19 +21,33 @@ const routes = [
       name: 'dash',
       component: dash
     },
+
+
     {
-      path: '/represent',
-      name: 'represent',
-      component: represent,
-    }, {
-      path: '/visualization',
-      name: 'visualization',
-      component: visualization,
+      path: '/interactionDivide',
+      name: 'interactionDivide',
+      component: interactionDivide,
     },
+    {
+      path: '/multicluster',
+      name: 'multicluster',
+      component: multicluster,
+    },
+    {
+      path: '/peopleDivide',
+      name: 'peopleDivide',
+      component: peopleDivide,
+    },
+
     {
       path: '/dataManage',
       name: 'dataManage',
       component: dataManage,
+    },
+    {
+      path: '/introduce',
+      name: 'introduce',
+      component: introduce,
     },
 
     ]

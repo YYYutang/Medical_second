@@ -153,7 +153,7 @@
             size="small"
             type="success"
             @click="submitUpload"
-            >上传到服务器</el-button
+            >上传到数据库</el-button
           >
           <div slot="tip" class="el-upload__tip">只能上传csv文件</div>
         </el-upload>

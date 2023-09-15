@@ -49,7 +49,11 @@
               value-style="font-size:30px;line-height:80px "
             >
             </el-statistic>
-            <el-progress :percentage="50" :format="format" style="margin-left:30px" ></el-progress>
+            <el-progress
+              :percentage="50"
+              :format="format"
+              style="margin-left: 30px"
+            ></el-progress>
           </div>
         </el-card>
       </div>
@@ -60,46 +64,74 @@
           <div slot="header" class="clearfix">
             <span class="lineStyle">▍</span><span>疾病统计</span>
           </div>
-          <div
-            v-for="(item, index) in diseaseData"
-            :key="index"
-            style="margin-top: 10px"
-          >
-            <div style="text-align: center">
-              <span>{{ item.name }}</span>
-              <el-progress
-                :text-inside="true"
-                :stroke-width="28"
-                :percentage="(item.num * 100) / patientNum"
-                style="margin-top: 10px;"
-              ></el-progress>
-            </div>
-          </div>
+          <div id="diseaseType" style="width: 800px; height: 400px"></div>
         </el-card>
       </div>
       <div class="mid">
         <el-card>
           <div slot="header" class="clearfix">
-            <span class="lineStyle">▍</span><span>系统数据信息</span>
+            <span class="lineStyle">▍</span><span>心血管数据</span>
           </div>
-          <el-table :data="tableData2" stripe style="width: 100%" height="400">
-            <el-table-column prop="tableName" label="数据表" width="100">
-            </el-table-column>
-            <el-table-column prop="tableOrigin" label="数据来源" width="180">
-            </el-table-column>
-            <el-table-column prop="tableSize" label="存储大小">
-            </el-table-column>
-            <el-table-column prop="tableDate" label="创建时间">
-            </el-table-column>
-          </el-table>
+          <div id="cardioData" style="width: 350px; height: 400px"></div>
         </el-card>
       </div>
       <div class="right">
-        <el-card>
+        <el-card style="height:500px">
           <div slot="header" class="clearfix">
-            <span class="lineStyle">▍</span><span>近七天数据增长趋势</span>
+            <span class="lineStyle">▍</span><span>系统数据大小信息</span>
           </div>
-          <div id="increase" style="width: 500px; height: 400px"></div>
+          <div class="sizeContain">
+            <div>
+             
+            <el-progress
+              type="circle"
+              :width="70"
+              :percentage="100"
+              color="#91CC75"
+              
+              :format="bigerData"
+              style="margin-top:40px;"
+            ></el-progress>
+            <br>
+            <span>cadio_train</span>
+            </div>
+            <div>
+               
+            <el-progress
+              type="circle"
+              :percentage="100"
+              color="#FAC858"
+              :format="bigestData"
+            ></el-progress>
+            <br>
+            <span style="margin-left:30px">diabetes</span>
+            </div>
+            <div>
+        
+            <el-progress
+              type="circle"
+              :width="70"
+              :percentage="100"
+              color="#5470C6"
+              :format="bigData"
+              style="margin-top:40px"
+            ></el-progress>
+            <br>
+             <span>lung_cancer</span>
+            </div>
+          </div>
+          <br>
+          <div style=" text-align: center;">
+            <div  style="margin-top:20px">
+             <svg-icon icon-file-name="金牌"/><span style="font-size:20px; ">Diabetes</span>
+            </div>
+            <div style="margin-top:20px">
+             <svg-icon icon-file-name="银牌"/><span style="font-size:20px; ">cardio_train</span>
+            </div>
+             <div style="margin-top:20px">
+             <svg-icon icon-file-name="铜牌"/><span style="font-size:20px; ">lung_cancer</span>
+            </div>
+          </div>
         </el-card>
       </div>
     </div>
@@ -109,21 +141,19 @@
 <script>
 import { getRequest } from "@/utils/api";
 import storage from "@/utils/storage";
+
 export default {
+
   name: "index",
   data() {
     return {
       mychart: {},
-      tableData2: [],
-      dataAllNum: 0,
-      insAllNum: 0,
-      missingAll: 0,
-      effectiveall: 0,
+
+
       line: null,
       patientNum: 200,
       xdata: [],
       ydata: [],
-
       like: true,
       value1: 4154,
       value2: 10,
@@ -131,66 +161,29 @@ export default {
       value4: "2022-12-30",
       value5: 10,
       title: "患者总数",
-
-      quickEntry: [
-        {
-          title: "数据表管理",
-          img: require("../../assets/dataManage.png"),
-          router: "/dataManage",
-        },
-        {
-          title: "疾病的特征性指标",
-          img: require("../../assets/mutipile.png"),
-          router: "/represent.vue",
-        },
-        {
-          title: "疾病画像",
-          img: require("../../assets/feiai.png"),
-          router: "/visualization.vue",
-        },
-        { title: "其他功能", img: require("../../assets/other.png") },
-      ],
-      diseaseData: [
-        {
-          name: "胃癌",
-          num: 30,
-        },
-        {
-          name: "糖尿病",
-          num: 23,
-        },
-        {
-          name: "肺癌",
-          num: 56,
-        },
-        {
-          name: "乳腺癌",
-          num: 12,
-        },
-        {
-          name: "高血压",
-          num: 22,
-        },
-      ],
     };
   },
   methods: {
     format(percentage) {
       return `成功${percentage}%`;
     },
-    quickLink(index) {
-      this.$router.replace(this.quickEntry[index].router);
+    bigestData(percentage) {
+      return `22M`;
     },
-    chart1() {
-      var chartDom = document.getElementById("increase");
-      this.mychart = this.$echarts.init(chartDom);
+    bigerData(percentage) {
+      return `16M`;
+    },
+    bigData(percentage) {
+      return `8M`;
+    },
 
-      var option;
-      option = {
+    chart() {
+      var chartDom = document.getElementById("diseaseType");
+      this.mychart = this.$echarts.init(chartDom);
+      var option = {
         xAxis: {
           type: "category",
-          data: this.xdata,
-          boundaryGap: false,
+          data: ["糖尿病", "心血管", "肺癌", "胃癌", "阿尔兹海默症", "白血病"],
         },
         yAxis: {
           type: "value",
@@ -200,19 +193,88 @@ export default {
         },
         series: [
           {
-            data: this.ydata,
-            type: "line",
-            showBackground: true,
-            color: " #75AAF2",
-            backgroundStyle: {
-              color: "rgba(180, 180, 180, 0.2)",
+            data: [120, 200, 150, 80, 70, 110],
+            type: "bar",
+          },
+        ],
+      };
+      option && this.mychart.setOption(option);
+    },
+    chart1() {
+      var chartDom = document.getElementById("cardioData");
+      this.mychart = this.$echarts.init(chartDom);
+
+      var option;
+      option = {
+        tooltip: {
+          trigger: "item",
+          formatter: function (params) {
+            return (
+              params.data.name +
+              ":" +
+              params.data.cdata +
+              "<br/>" +
+              "百分比：" +
+              params.data.value +
+              "%"
+            );
+          },
+        },
+        toolbox: {
+          feature: {
+            restore: {},
+          },
+        },
+        legend: {
+          data: ["训练样本", "可用样本", "样本总数"],
+          left: "5%",
+        },
+        series: [
+          {
+            name: "Funnel",
+            type: "funnel",
+            left: "10%",
+            top: 60,
+            bottom: 60,
+            width: "80%",
+            min: 0,
+            max: 100,
+            minSize: "0%",
+            maxSize: "100%",
+            sort: "descending",
+            gap: 2,
+            label: {
+              show: true,
+              position: "inside",
             },
+            labelLine: {
+              length: 10,
+              lineStyle: {
+                width: 1,
+                type: "solid",
+              },
+            },
+            itemStyle: {
+              borderColor: "#fff",
+              borderWidth: 1,
+            },
+            emphasis: {
+              label: {
+                fontSize: 20,
+              },
+            },
+            data: [
+              { value: 60, name: "训练样本", cdata: 4651 },
+              { value: 80, name: "可用样本", cdata: 5008 },
+              { value: 100, name: "样本总数", cdata: 5833 },
+            ],
           },
         ],
       };
 
       option && this.mychart.setOption(option);
     },
+
     getAllData() {
       getRequest("/index/getAllData").then((response) => {
         if (response) {
@@ -250,13 +312,13 @@ export default {
         for (let i in this.xdata) {
           this.ydata.push(response.data[this.xdata[i]]);
         }
-        this.chart1();
       });
     },
   },
   mounted() {
     this.getStatis();
-
+    this.chart();
+    this.chart1();
     this.getAllData();
     // this.getIncrease();
 
@@ -367,5 +429,9 @@ export default {
   justify-content: space-evenly;
   align-items: center;
 }
-
+.sizeContain{
+   display: flex;
+    flex-wrap: wrap;
+    justify-content:space-between;
+}
 </style>

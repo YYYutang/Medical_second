@@ -88,3 +88,12 @@ export const deleteRequest = (url, params) => {
         data: params
     })
 }
+
+export const downLoadPostRequest = (url, params) => {
+    return axios({
+        method: 'post',
+        url: `${base}${url}`,
+        data: params,
+        responseType: 'blob',
+    })
+}
