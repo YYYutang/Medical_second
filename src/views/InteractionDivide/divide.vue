@@ -6,7 +6,7 @@
           >添加特征</el-button
         >
       </div>
-
+      <div class="foucus_features">
       <div class="line">
         <h1
           style="display: flex; align-content: center; justify-content: center"
@@ -55,6 +55,7 @@
             </div>
           </el-form>
         </div>
+      </div>
       </div>
       <div
         style="display: flex; align-content: center; justify-content: center"
@@ -205,6 +206,11 @@ export default {
 .form {
   display: flex;
   align-content: center;
+  justify-content: center;
+}
+.foucus_features{
+  display:flex;
+    align-content: center;
   justify-content: center;
 }
 .line {

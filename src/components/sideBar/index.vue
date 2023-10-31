@@ -10,7 +10,7 @@
           background-color="#071135"
         >
           <el-menu-item index="1" style="color: #5292d8; font-size: 20px"
-            ><i class="el-icon-box"></i>多粒度人群智能分层</el-menu-item
+            ><i class="el-icon-box"></i>多粒度人群智能分层工具软件</el-menu-item
           >
           <!--            <template slot="title">当前服务器：</template>-->
           <el-menu-item
@@ -21,7 +21,7 @@
           <el-menu-item
             index="3"
             style="float: right; color: #fff; font-size: 14px"
-            ><i class="el-icon-user"></i>欢迎你，xx</el-menu-item
+            ><i class="el-icon-user"></i>欢迎你，{{username}}</el-menu-item
           >
           <el-menu-item index="4" style="float: right"
             ><i class="el-icon-question"></i
@@ -47,6 +47,14 @@
             <el-menu-item index="/dataManage">
               <i class="el-icon-s-tools"></i>
               数据管理</el-menu-item
+            >
+             <el-menu-item index="/columnManage">
+              <i class="el-icon-connection"></i>
+              字段管理</el-menu-item
+            >
+             <el-menu-item index="/operationManage">
+              <i class="el-icon-copy-document"></i>
+              操作日志</el-menu-item
             >
            <el-menu-item index="/multicluster">
               <i class="el-icon-connection"></i>
@@ -82,6 +90,7 @@
 
 <script>
 import AppMain from "@/components/AppMain";
+import {postRequest,getRequest} from '@/utils/api'
 export default {
   components: { AppMain },
   data() {
@@ -89,10 +98,18 @@ export default {
       activeIndex: "1",
       activeIndex2: "1",
       dialogVisible: false,
+      username:'',
     };
   },
   methods: {
     handleSelect(key) {
+         if(key==2){
+      postRequest('/user/logout').then((resp)=>{
+        if(resp.code=="200"){
+          this.$router.replace("/");
+        }
+      })
+      }
       if (key == 4) {
         this.$alert(
           "病种的指标存在维度过多的问题，可能导致后续的分析作业效果不佳，本软件提供一个通过机器学习算法将多维的指标转化成低维指标的平台。",
@@ -105,8 +122,17 @@ export default {
     },
     handleOpen(key, keyPath) {
       console.log(key, keyPath);
+      
     },
+  
   },
+   mounted(){
+              console.log('in')
+      getRequest('index/getUserInfo').then((resp)=>{
+      
+      this.username=resp.data
+    })
+    }
 };
 </script>
 

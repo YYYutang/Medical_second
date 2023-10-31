@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="container">
-      <div style="font-size: 50px">多粒度人群智能分层软件</div>
+      <div style="font-size: 50px">多粒度人群智能分层工具软件</div>
       <div class="size-icon">
         <div class="icon" @click="linktoDash">
           <svg-icon icon-file-name="首页" />
